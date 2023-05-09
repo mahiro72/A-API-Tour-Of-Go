@@ -1,4 +1,4 @@
-# A API Tour Of Go
+# API Tour Of Go
 
 APIの入門書
 
