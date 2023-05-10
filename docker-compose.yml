@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+  api:
+    container_name: doc-api
+    build: 
+      context: .
+      dockerfile: ./docker/develop/api/Dockerfile
+    tty: true
+    restart: always
+    environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_HOST=doc-mysql
+      - ENVIRONMENT=develop
+    depends_on:
+      - mysql
+    ports:
+      - 8080:8080
+    volumes:
+      - .:/go/src/github.com/mahiro72/API-Tour-Of-Go
+  mysql:
+    container_name: doc-mysql
+    build:
+      context: .
+      dockerfile: ./docker/develop/mysql/Dockerfile
+    tty: true
+    restart: always
+    environment:
+      - MYSQL_DATABASE=db
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=pass
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_HOST=doc-mysql
+    ports:
+      - 3306:3306
+    volumes:
+      - doc-mysql-vol:/var/lib/mysql
+      - ./docker/develop/mysql/initdb.d:/docker-entrypoint-initdb.d
+
+volumes:
+  doc-mysql-vol:
