@@ -5,7 +5,8 @@ services:
     container_name: doc-api
     build: 
       context: .
-      dockerfile: ./docker/develop/api/Dockerfile
+      dockerfile: ./docker/api/Dockerfile
+      target: develop
     tty: true
     restart: always
     environment:
@@ -25,7 +26,7 @@ services:
     container_name: doc-mysql
     build:
       context: .
-      dockerfile: ./docker/develop/mysql/Dockerfile
+      dockerfile: ./docker/mysql/Dockerfile
     tty: true
     restart: always
     environment:
@@ -38,7 +39,7 @@ services:
       - 3306:3306
     volumes:
       - doc-mysql-vol:/var/lib/mysql
-      - ./docker/develop/mysql/initdb.d:/docker-entrypoint-initdb.d
+      - ./docker/mysql/initdb.d:/docker-entrypoint-initdb.d
 
 volumes:
   doc-mysql-vol:
